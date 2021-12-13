@@ -53,7 +53,6 @@ def file_to_data(path, file_to_filter):
             data[identifiant]['saved_data'] = []
         data[identifiant]['time'].append(time)
         data[identifiant]['saved_data'].append(saved_data)
-    data_to_json(file_to_filter, data)
     return data
 
 def data_to_json(file_name, data):
