@@ -1,5 +1,5 @@
-# Ignorer l'entièreté des fichiers/dossiers
-/**/*
+# Ignorer des fichiers/dossiers
+filter_raw_data.py
 
 # Ne PAS ignorer les fichiers Python et autre fichier important
 !/README.md
@@ -8,3 +8,4 @@
 !/graph_interface.py
 !/formule.py
 !/filter.py
+!/data_file/16sept_1.txt
