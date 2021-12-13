@@ -1,5 +1,6 @@
 # Ignorer des fichiers/dossiers
 filter_raw_data.py
+génération_de_code.py
 
 # Ne PAS ignorer les fichiers Python et autre fichier important
 !/README.md
