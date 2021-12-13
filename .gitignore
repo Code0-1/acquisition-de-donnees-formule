@@ -7,5 +7,5 @@ filter_raw_data.py
 !/main.py
 !/graph_interface.py
 !/formule.py
-!/filter.py
+!/filter_data.py
 !/data_file/16sept_1.txt
