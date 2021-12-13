@@ -1,0 +1,9 @@
+# Ignorer l'entièreté des fichiers/dossiers
+/**/*
+
+# Ne PAS ignorer les fichiers Python et autre fichier important
+!/README.md
+!/.gitignore
+!/main.py
+!/graph_interface.py
+!/formule.py
