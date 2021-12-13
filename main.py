@@ -10,6 +10,7 @@ path = os.path.abspath('main.py')[:-7]
 file = filter_data.get_file(path)
 
 data = {}
+
 # regarde si le fichier est déjà filtrer
 '''peu importe l'erreur il va :
 refiltrer tous les données du fichier'''
