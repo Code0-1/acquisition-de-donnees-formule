@@ -180,5 +180,6 @@ def get_y_value(idd, data):
             y =  0.0184*y-53.174
             saved_data.append(y)
         data['08020080']['saved_data'] = saved_data
-    raise ValueError
+    else:
+        raise ValueError
 
