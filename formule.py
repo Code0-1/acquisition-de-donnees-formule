@@ -121,38 +121,57 @@ def get_y_value(idd, data):
         pass
     elif idd == '04140000':
         pass
-    elif idd == '04430000':
-        pass
-    elif idd == '04440000':
-        pass
-    elif idd == '04530000':
+    elif idd in ['04430000', '04440000']: # ok
+        ''' Motor 3 and 4 speed (BE i16)
+            on utilise seulement les 4 premiers chiffres
+            de notre donnée'''
+        saved_data = []
+        for i, y in enumerate(data[idd]['saved_data']):
+            y = y[:5]
+            # hex2dec
+            y = int(y, 16)
+            saved_data.append(y)
+        data[idd]['saved_data'] = saved_data
+    elif idd == '04530000': # Inverter 3 SpI and I (inv3SP) - SpId SpIq Intd Intq
         pass
     elif idd == '04540000':
         pass
-    elif idd == '04630000':
+    elif idd == '04630000': # Inverter 3 SVM amplitude and SVM angle (inv3SP) - SpId SpIq Intd Intq
         pass
-    elif idd == '04640000':
+    elif idd == '04640000': # Inverter 4 SpI and I (inv4SP) - SpId SpIq Intd Intq
         pass
-    elif idd == '04830000':
+    elif idd == '04730000': # Inverter 3 Ia Ib Ic
         pass
-    elif idd == '04840000':
+    elif idd == '04740000': # Inverter 4 Ia Ib Ic
         pass
-    elif idd == '08000080':
+    elif idd == '04830000': # Inverter 3 I and V (inv3IV) - Iq Id Vq Vd (all BE i16)
+        pass
+    elif idd == '04840000': # Inverter 4 I and V (inv4IV) - Iq Id Vq Vd (all BE i16)
+        pass
+    elif idd == '04930000': # Inverter 3 Cos Sin
+        pass
+    elif idd == '04940000': # Inverter 4 Cos Sin
+        pass
+    elif idd in ['08000080', '08010080']: # ok
         # hex2dec(y)
         # def pourcentage(value, max):
         # 100% APPS (full travel) corresponds to 63534
         max = 65354
         saved_data = []
-        for i, y in enumerate(data['08000080']['saved_data']):
+        for i, y in enumerate(data[idd]['saved_data']):
             # hex2dec
             y = int(y, 16)
             # valeur en pourcentage
             y = pourcentage_custum(y, max)
             saved_data.append(y)
-        data['08000080']['saved_data'] = saved_data
-    elif idd == '08010080':
-        pass
-    elif idd == '08020080':
+        data[idd]['saved_data'] = saved_data
+    elif idd == '08020080': # 
+        '''SPS - Steering position sensor [LE i16 ->need to change from uint16 to int16]
+           Need to make a calibration run to know value at full lock both ways and
+           then convert data to degree (quick fix). Even better would be to go into
+           acquisition module code and calibrate it there (ask VincentD how to).
+           Volant full lock gauche: 3970 (80.30deg), droit = 1719 (73.20deg)
+           Roues tournent d'environ 20deg de chaque côté'''
         saved_data = []
         for i, y in enumerate(data['08020080']['saved_data']):
             # hex2dec
