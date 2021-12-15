@@ -1,5 +1,5 @@
-# usefull documentation :
-# https://gitlab.com/FormUL/electro/software/ulr-rics-scripts/-/blob/master/dash.lua
+
+
 
 def pourcentage_custum(value, max):
     return 100*value/max
@@ -12,15 +12,20 @@ def get_y_value(idd, data):
     '''
     if idd == '00000004':
         pass
-    elif idd == '00000008':
+    elif idd == '00000008': # LEDIMD:color
+        # useless
         pass
-    elif idd == '0000000A':
+    elif idd == '0000000A': # frameUpRight
+        # useless
         pass
-    elif idd == '0000000B':
+    elif idd == '0000000B': # frameUpLeft:label
+        # useless
         pass
-    elif idd == '0000000C':
+    elif idd == '0000000C': # frameDownRight:label
+        # useless
         pass
-    elif idd == '0000000D':
+    elif idd == '0000000D': # frameDownLeft:label
+        # useless
         pass
     elif idd == '00000099':
         pass
@@ -100,7 +105,7 @@ def get_y_value(idd, data):
         pass
     elif idd == '02031381':
         pass
-    elif idd == '02070081':
+    elif idd == '02070081': # id & 0xFFFF0000 == 0x02070000
         pass
     elif idd == '02090080':
         pass
@@ -112,13 +117,17 @@ def get_y_value(idd, data):
         pass
     elif idd == '020C0281':
         pass
-    elif idd == '04010000':
+    elif idd == '04010000': # inverterFrontL:color
+        # useless
         pass
-    elif idd == '04020000':
+    elif idd == '04020000': # inverterFrontR:color
+        # useless
         pass
-    elif idd == '04030000':
+    elif idd == '04030000': # inverterBackL:color
+        # useless
         pass
-    elif idd == '04040000':
+    elif idd == '04040000': # inverterBackR:color
+        # useless
         pass
     elif idd == '04110000':
         pass
@@ -133,7 +142,7 @@ def get_y_value(idd, data):
             on utilise seulement les 4 premiers chiffres
             de notre donnée'''
         saved_data = []
-        for i, y in enumerate(data[idd]['saved_data']):
+        for y in data[idd]['saved_data']:
             y = y[:5]
             # hex2dec
             y = int(y, 16)
@@ -180,13 +189,13 @@ def get_y_value(idd, data):
            Volant full lock gauche: 3970 (80.30deg), droit = 1719 (73.20deg)
            Roues tournent d'environ 20deg de chaque côté'''
         saved_data = []
-        for y in data['08020080']['saved_data']:
+        for y in data[idd]['saved_data']:
             # hex2dec
             y = int(y, 16)
             # transformer en degré
             y =  0.0184*y-53.174
             saved_data.append(y)
-        data['08020080']['saved_data'] = saved_data
+        data[idd]['saved_data'] = saved_data
     else:
         raise ValueError
 
