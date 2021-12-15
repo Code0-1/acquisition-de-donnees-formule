@@ -1,3 +1,6 @@
+# usefull documentation :
+# https://gitlab.com/FormUL/electro/software/ulr-rics-scripts/-/blob/master/dash.lua
+
 def pourcentage_custum(value, max):
     return 100*value/max
 
@@ -20,6 +23,10 @@ def get_y_value(idd, data):
     elif idd == '0000000D':
         pass
     elif idd == '00000099':
+        pass
+    elif idd == '01000002':
+        # rtdPressedBox:color(fl.GREEN)
+        # aucune donnée est collectée
         pass
     elif idd == '01310000':
         pass
@@ -158,7 +165,7 @@ def get_y_value(idd, data):
         # 100% APPS (full travel) corresponds to 63534
         max = 65354
         saved_data = []
-        for i, y in enumerate(data[idd]['saved_data']):
+        for y in data[idd]['saved_data']:
             # hex2dec
             y = int(y, 16)
             # valeur en pourcentage
@@ -173,7 +180,7 @@ def get_y_value(idd, data):
            Volant full lock gauche: 3970 (80.30deg), droit = 1719 (73.20deg)
            Roues tournent d'environ 20deg de chaque côté'''
         saved_data = []
-        for i, y in enumerate(data['08020080']['saved_data']):
+        for y in data['08020080']['saved_data']:
             # hex2dec
             y = int(y, 16)
             # transformer en degré
