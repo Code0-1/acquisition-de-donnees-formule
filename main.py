@@ -25,6 +25,10 @@ except:
     # save data after treatment
     filter_data.data_to_json(file, data)
 
-# Commencer à filtrer les données reçues
-pass
+# Commencer à afficher les graphiques
+'''ne pas oublier
+repeat_time = data[idd]['data_saved'].get('n_graph', 1)
+for i in repeat_time:
+    # créer un subplot
+    pass'''
 

@@ -149,24 +149,57 @@ def get_y_value(idd, data):
             saved_data.append(y)
         data[idd]['saved_data'] = saved_data
     elif idd == '04530000': # Inverter 3 SpI and I (inv3SP) - SpId SpIq Intd Intq
+        saved_data1 = []
+        saved_data2 = []
+        saved_data3 = []
+        saved_data4 = []
+        for y in data[idd]['saved_data']:
+            saved_data1.append(int(y[:4], 16))
+            saved_data2.append(int(y[4:8], 16))
+            saved_data3.append(int(y[8:12], 16))
+            saved_data4.append(int(y[12:17], 16))
+        data[idd]['saved_data']['y1'] = saved_data1
+        data[idd]['saved_data']['y2'] = saved_data2
+        data[idd]['saved_data']['y3'] = saved_data3
+        data[idd]['saved_data']['y4'] = saved_data4
+        data[idd]['saved_data']['n_graph'] = 4
         pass
     elif idd == '04540000':
         pass
     elif idd == '04630000': # Inverter 3 SVM amplitude and SVM angle (inv3SP) - SpId SpIq Intd Intq
-        pass
+        '''Sdata.SVMamp3= data(Sdata.idx.inv3SVM,:);
+Sdata.SVMamp3.hex = extractBetween(Sdata.SVMamp3.data,13,14) + extractBetween(Sdata.SVMamp3.data,16,17);
+Sdata.SVMamp3.dec = hex2dec(Sdata.SVMamp3.hex);
+Sdata.SVMamp3.dec_int = double(typecast(uint16(Sdata.SVMamp3.dec),'int16'))/10;
+
+Les données ne se rendent pas à l'index 19, 20 et 22, 23
+Sdata.SVMang3 = data(Sdata.idx.inv3SVM,:);
+Sdata.SVMang3.hex = extractBetween(Sdata.SVMang3.data,19,20) + extractBetween(Sdata.SVMang3.data,22,23);
+Sdata.SVMang3.dec = hex2dec(Sdata.SVMang3.hex);
+Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000;'''
+        saved_data1 = []
+        saved_data2 = []
+        for y in data[idd]['saved_data']:
+            saved_data1.append(int(y[12:17], 16))
+            # Les données ne se rendent pas à l'index 19, 20 et 22, 23
+            saved_data1.append(0)
+
+        data[idd]['saved_data']['y1'] = saved_data1
+        data[idd]['saved_data']['y2'] = saved_data2
+        data[idd]['saved_data']['n_graph'] = 2
     elif idd == '04640000': # Inverter 4 SpI and I (inv4SP) - SpId SpIq Intd Intq
+        saved_data = []
+        for y in data[idd]['saved_data']:
+            saved_data.append(int(y, 16))
+        data[idd]['saved_data'] = saved_data
+    elif idd in ['04730000', '04740000']: # Inverter 3 et 4 Ia Ib Ic
+        # inexistant dans les fichiers reçus
         pass
-    elif idd == '04730000': # Inverter 3 Ia Ib Ic
+    elif idd in ['04830000', '04840000']: # Inverter 3 et 4 I and V (inv3IV) - Iq Id Vq Vd (all BE i16)
+        # inexistant dans les fichiers reçus
         pass
-    elif idd == '04740000': # Inverter 4 Ia Ib Ic
-        pass
-    elif idd == '04830000': # Inverter 3 I and V (inv3IV) - Iq Id Vq Vd (all BE i16)
-        pass
-    elif idd == '04840000': # Inverter 4 I and V (inv4IV) - Iq Id Vq Vd (all BE i16)
-        pass
-    elif idd == '04930000': # Inverter 3 Cos Sin
-        pass
-    elif idd == '04940000': # Inverter 4 Cos Sin
+    elif idd == ['04930000', '04940000']: # Inverter 3 et 4 Cos Sin
+        # inexistant dans les fichiers reçus
         pass
     elif idd in ['08000080', '08010080']: # ok
         # hex2dec(y)
@@ -197,5 +230,5 @@ def get_y_value(idd, data):
             saved_data.append(y)
         data[idd]['saved_data'] = saved_data
     else:
-        raise ValueError
+        raise ValueError('aucun identifiant connue dans formule.py')
 
