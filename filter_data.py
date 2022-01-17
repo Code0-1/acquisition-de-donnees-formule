@@ -38,8 +38,9 @@ def file_to_data(path, file_to_filter):
     print('Traitement des données...')
     txt = open(path+'data_file\\'+file_to_filter, 'r').read()
     raw_data = txt.split('\n')
-    data = {}
-    for d in raw_data:
+    data = dict()
+    # dernière ligne est parfois mal formatter
+    for d in raw_data[:-1]:
         if not re.search('\[', d):
             #C'est pas save, mais ça devrait jamais arriver
             raise ValueError('[x] non présent')
@@ -47,8 +48,9 @@ def file_to_data(path, file_to_filter):
         time = d[1][1:-1]
         identifiant = d[5]
         saved_data = "".join(d[10:])
-        if not data.get(['identifiant'], ""):
-            data[identifiant] = {}
+
+        if not identifiant in data:
+            data[identifiant] = dict()
             data[identifiant]['time'] = []
             data[identifiant]['saved_data'] = []
         data[identifiant]['time'].append(time)
@@ -60,15 +62,15 @@ def data_to_json(file_name, data):
     args : file_name(str), data(dict)
     raise : aucun
     return : aucun'''
-    with open(create_file_name_json(file_name), 'w') as fich:
+    with open('data_file\\'+create_file_name_json(file_name), 'w') as fich:
         fich.write(json.dumps(data))
 
 def create_file_name_json(file_name):
-    '''prend le nom du fichier et créer un fichier file_name+"_json.txt"
+    '''prend le nom du fichier et créer un fichier file_name+".json"
     args : file_name(str)
     raise : aucun
     return : nouveau_nom_du _fichier(str)'''
-    file_name = file_name[:-4] + '_json.txt'
+    file_name = file_name[:-4] + '.json'
     return file_name
 
 def read_json(file_name):
@@ -77,7 +79,7 @@ def read_json(file_name):
     raise : aucun
     return : data(dict)'''
     data = {}
-    with open(create_file_name_json(file_name), 'w') as fich:
+    with open('data_file\\'+create_file_name_json(file_name), 'w') as fich:
         data = json.loads(fich.read())
     return data
 
