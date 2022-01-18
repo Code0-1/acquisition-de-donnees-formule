@@ -137,7 +137,7 @@ def get_xy_value(idd, data):
         pass
     elif idd == '04140000':
         pass
-    elif idd in ['04430000', '04440000']: # ok
+    elif idd == '04430000': # ok
         ''' Motor 3 and 4 speed (BE i16)
             on utilise seulement les 4 premiers chiffres
             de notre donnée'''
@@ -149,6 +149,22 @@ def get_xy_value(idd, data):
             saved_data.append(y)
         data[idd]['y1'] = saved_data
         data[idd]['n_graph'] = 1
+        data[idd]['title1'] = 'Motor speed 04430000'
+        data[idd]['unité_y1'] = 'RPM' # à vérifier
+    elif idd == '04440000': # ok
+        ''' Motor 3 and 4 speed (BE i16)
+            on utilise seulement les 4 premiers chiffres
+            de notre donnée'''
+        saved_data = []
+        for y in data[idd]['saved_data']:
+            y = y[:5]
+            # hex2dec
+            y = int(y, 16)
+            saved_data.append(y)
+        data[idd]['y1'] = saved_data
+        data[idd]['n_graph'] = 1
+        data[idd]['title1'] = 'Motor speed 04440000'
+        data[idd]['unité_y1'] = 'RPM' # à vérifier
     elif idd == '04530000': # Inverter 3 SpI and I (inv3SP) - SpId SpIq Intd Intq
         saved_data1 = []
         saved_data2 = []
@@ -159,10 +175,18 @@ def get_xy_value(idd, data):
             saved_data2.append(int(y[4:8], 16))
             saved_data3.append(int(y[8:12], 16))
             saved_data4.append(int(y[12:17], 16))
+        data[idd]['title1'] = 'Inverter 3 SpId'
         data[idd]['y1'] = saved_data1
+        data[idd]['unité_y1'] = 'SpId'
+        data[idd]['title2'] = 'Inverter 3 SpIq'
         data[idd]['y2'] = saved_data2
+        data[idd]['unité_y2'] = 'SpIq'
+        data[idd]['title3'] = 'Inverter 3 Intd'
         data[idd]['y3'] = saved_data3
+        data[idd]['unité_y3'] = 'Intd'
+        data[idd]['title4'] = 'Inverter 3 Intq'
         data[idd]['y4'] = saved_data4
+        data[idd]['unité_y4'] = 'Intq'
         data[idd]['n_graph'] = 4
         pass
     elif idd == '04540000':
@@ -184,15 +208,20 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
             saved_data1.append(int(y[12:17], 16))
             # Les données ne se rendent pas à l'index 19, 20 et 22, 23
             saved_data2.append(0)
-
+        data[idd]['title1'] = 'Inverter 3 SpId'
         data[idd]['y1'] = saved_data1
+        data[idd]['unité_y1'] = 'SVM amplitude'
+        data[idd]['title2'] = 'Inverter 3 angle'
         data[idd]['y2'] = saved_data2
+        data[idd]['unité_y2'] = 'SVM angle'
         data[idd]['n_graph'] = 2
     elif idd == '04640000': # Inverter 4 SpI and I (inv4SP) - SpId SpIq Intd Intq
         saved_data = []
         for y in data[idd]['saved_data']:
             saved_data.append(int(y, 16))
+        data[idd]['title1'] = 'Inverter 4'
         data[idd]['y1'] = saved_data
+        data[idd]['unité_y1'] = 'Intensité' # à vérifier
         data[idd]['n_graph'] = 1
     elif idd in ['04730000', '04740000']: # Inverter 3 et 4 Ia Ib Ic
         # inexistant dans les fichiers reçus
@@ -203,7 +232,7 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
     elif idd == ['04930000', '04940000']: # Inverter 3 et 4 Cos Sin
         # inexistant dans les fichiers reçus
         pass
-    elif idd in ['08000080', '08010080']: # ok
+    elif idd == '08010080': # ok
         # hex2dec(y)
         # def pourcentage(value, max):
         # 100% APPS (full travel) corresponds to 63534
@@ -215,7 +244,25 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
             # valeur en pourcentage
             y = pourcentage_custum(y, max)
             saved_data.append(y)
+        data[idd]['title1'] = 'Full travel'
         data[idd]['y1'] = saved_data
+        data[idd]['unité_y1'] = 'pourcent full traval'
+        data[idd]['n_graph'] = 1
+    elif idd == '08010080': # ok
+        # hex2dec(y)
+        # def pourcentage(value, max):
+        # 100% APPS (full travel) corresponds to 63534
+        max = 65354
+        saved_data = []
+        for y in data[idd]['saved_data']:
+            # hex2dec
+            y = int(y, 16)
+            # valeur en pourcentage
+            y = pourcentage_custum(y, max)
+            saved_data.append(y)
+            data[idd]['title1'] = 'Full travel'
+        data[idd]['y1'] = saved_data
+        data[idd]['unité_y1'] = 'pourcent full traval'
         data[idd]['n_graph'] = 1
     elif idd == '08020080': # 
         '''SPS - Steering position sensor [LE i16 ->need to change from uint16 to int16]
@@ -231,7 +278,9 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
             # transformer en degré
             y =  0.0184*y-53.174
             saved_data.append(y)
+        data[idd]['title1'] = 'SPS'
         data[idd]['y1'] = saved_data
+        data[idd]['unité_y1'] = 'Steering position sensor'
         data[idd]['n_graph'] = 1
     else:
         raise ValueError('aucun identifiant connue dans formule.py')
