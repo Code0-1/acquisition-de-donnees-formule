@@ -232,7 +232,7 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
     elif idd == ['04930000', '04940000']: # Inverter 3 et 4 Cos Sin
         # inexistant dans les fichiers reçus
         pass
-    elif idd == '08010080': # ok
+    elif idd == '08000080': # ok
         # hex2dec(y)
         # def pourcentage(value, max):
         # 100% APPS (full travel) corresponds to 63534
@@ -264,7 +264,7 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
         data[idd]['y1'] = saved_data
         data[idd]['unité_y1'] = 'pourcent full traval'
         data[idd]['n_graph'] = 1
-    elif idd == '08020080': # 
+    elif idd == '08020080':
         '''SPS - Steering position sensor [LE i16 ->need to change from uint16 to int16]
            Need to make a calibration run to know value at full lock both ways and
            then convert data to degree (quick fix). Even better would be to go into
@@ -283,7 +283,7 @@ Sdata.SVMang3.dec_int = double(typecast(uint16(Sdata.SVMang3.dec),'int16'))/1000
         data[idd]['unité_y1'] = 'Steering position sensor'
         data[idd]['n_graph'] = 1
     else:
-        raise ValueError('aucun identifiant connue dans formule.py')
+        raise ValueError(f'aucun identifiant {id} connue dans formule.py')
     
     # x turn
     x = []

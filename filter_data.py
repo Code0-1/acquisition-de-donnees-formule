@@ -70,7 +70,7 @@ def create_file_name_json(file_name):
     args : file_name(str)
     raise : aucun
     return : nouveau_nom_du _fichier(str)'''
-    file_name = file_name[:-4] + '.json'
+    file_name = file_name.replace('.txt', '.json')
     return file_name
 
 def read_json(file_name):
@@ -79,7 +79,7 @@ def read_json(file_name):
     raise : aucun
     return : data(dict)'''
     data = {}
-    with open('data_file\\'+create_file_name_json(file_name), 'w') as fich:
-        data = json.loads(fich.read())
+    with open('data_file\\'+create_file_name_json(file_name)) as fich:
+        data = json.load(fich)
     return data
 

@@ -14,9 +14,10 @@ data = {}
 # regarde si le fichier est déjà filtrer
 '''peu importe l'erreur il va :
 refiltrer tous les données du fichier'''
-if os.path.exists(f'data_file\\{file}.json'):
-    # check later
-    pass
+if os.path.exists(f'data_file/{file[:-4]}.json'):
+    '''suppose que le fichier finit en .txt'''
+    file = filter_data.create_file_name_json(file)
+    data = filter_data.read_json(file)
 else:
     data = filter_data.file_to_data(path, file)
     # filtre les datas
